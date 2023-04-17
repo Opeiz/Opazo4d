@@ -71,7 +71,7 @@ def multi_domain_osse_diag(
     tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
-    print(metrics_df.to_markdown())
+    # print(metrics_df.to_markdown())
     metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
 
@@ -97,19 +97,36 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
                     [
                         {
                             "domain": d,
-                            "period": p,
+                            #"period": p,
                             "variable": "rec_ssh",
                             "lt": lt,
                             "lx": lx,
-                            "lats": test_domains[d].test["lat"],
-                            "lons": test_domains[d].test["lon"],
+                            "lats x": (test_domains[d].test["lat"]).start,
+                            "lats y": (test_domains[d].test["lat"]).stop,
+                            "lons x": (test_domains[d].test["lon"]).start,
+                            "lons y": (test_domains[d].test["lon"]).stop,
                         },
                     ]
                 )
                 .set_index("variable")
-                .join(leaderboard_rmse.to_array().to_dataframe(name="mu"))
+                .join(round(leaderboard_rmse.to_array().to_dataframe(name="mu"),5))
             )
             metrics.append(mdf)
-            print(mdf.to_markdown())
     metrics_df = pd.concat(metrics)
+    metrics_df = metrics_df.sort_values(by='mu')
     return metrics_df
+
+
+def load_oi_4nadirs():
+    oi = xr.open_dataset('../sla-data-registry/NATL60/NATL/oi/ssh_NATL60_4nadir.nc')
+    ssh = xr.open_dataset('../sla-data-registry/NATL60/NATL/ref_new/NATL60-CJM165_NATL_ssh_y2013.1y.nc')
+    ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
+    
+    return ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+
+def load_oi_swot():
+    oi = xr.open_dataset('../sla-data-registry/NATL60/NATL/oi/ssh_NATL60_swot.nc')
+    ssh = xr.open_dataset('../sla-data-registry/NATL60/NATL/ref_new/NATL60-CJM165_NATL_ssh_y2013.1y.nc')
+    ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
+    
+    return ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))

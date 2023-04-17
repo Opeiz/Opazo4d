@@ -1,1 +1,2 @@
-import contrib.ose2osse
+from pathlib import Path
+from itertools import product
