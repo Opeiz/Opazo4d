@@ -84,9 +84,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
 
             da_rec, da_ref = tdat.sel(test_domain).drop("ssh") ,tdat.sel(test_domain).ssh
             leaderboard_rmse = (
-                1.0
-                - (((da_rec - da_ref) ** 2).mean()) ** 0.5
-                / (((da_ref) ** 2).mean()) ** 0.5
+                1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
             )
             psd, lx, lt = src.utils.psd_based_scores(
                 da_rec.ssh_mod.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
@@ -101,10 +99,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
                             "variable": "rec_ssh",
                             "lt": lt,
                             "lx": lx,
-                            "lats x": (test_domains[d].test["lat"]).start,
-                            "lats y": (test_domains[d].test["lat"]).stop,
-                            "lons x": (test_domains[d].test["lon"]).start,
-                            "lons y": (test_domains[d].test["lon"]).stop,
+                            "lats": (test_domains[d].test["lat"]).start + "," + (test_domains[d].test["lat"]).stop,
+                            "lons": (test_domains[d].test["lon"]).start + "," +(test_domains[d].test["lon"]).stop,
                         },
                     ]
                 )
@@ -112,8 +108,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
                 .join(round(leaderboard_rmse.to_array().to_dataframe(name="mu"),5))
             )
             metrics.append(mdf)
-    metrics_df = pd.concat(metrics)
-    metrics_df = metrics_df.sort_values(by='mu')
+    metrics_df = pd.concat(metrics).sort_values(by='mu')
     return metrics_df
 
 
