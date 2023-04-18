@@ -160,23 +160,32 @@ def rmse_based_scores(da_rec, da_ref):
 
 def psd_based_scores(da_rec, da_ref):
     err = da_rec - da_ref
+    print("ERR: " + err)
     err["time"] = (err.time - err.time[0]) / np.timedelta64(1, "D")
+
     signal = da_ref
     signal["time"] = (signal.time - signal.time[0]) / np.timedelta64(1, "D")
+    
     psd_err = xrft.power_spectrum(
         err, dim=["time", "lon"], detrend="constant", window="hann"
     ).compute()
+    
     psd_signal = xrft.power_spectrum(
         signal, dim=["time", "lon"], detrend="constant", window="hann"
     ).compute()
+    
     mean_psd_signal = psd_signal.mean(dim="lat").where(
         (psd_signal.freq_lon > 0.0) & (psd_signal.freq_time > 0), drop=True
     )
+    
     mean_psd_err = psd_err.mean(dim="lat").where(
         (psd_err.freq_lon > 0.0) & (psd_err.freq_time > 0), drop=True
     )
+    
     psd_based_score = 1.0 - mean_psd_err / mean_psd_signal
+    print("PSD BASED SCORE:"+ psd_based_score)
     level = [0.5]
+    
     cs = plt.contour(
         1.0 / psd_based_score.freq_lon.values,
         1.0 / psd_based_score.freq_time.values,
