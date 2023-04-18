@@ -83,14 +83,12 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
             test_domain = dict(time=slice(*p), **tdom_spat)
 
             da_rec, da_ref = tdat.sel(test_domain).drop("ssh") ,tdat.sel(test_domain).ssh
-            
-	    leaderboard_rmse = (
+            leaderboard_rmse = (
                 1.0
                 - (((da_rec - da_ref) ** 2).mean()) ** 0.5
                 / (((da_ref) ** 2).mean()) ** 0.5
             )
-            
-	    psd, lx, lt = src.utils.psd_based_scores(
+            psd, lx, lt = src.utils.psd_based_scores(
                 da_rec.ssh_mod.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
                 da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
             )
