@@ -198,7 +198,11 @@ def psd_based_scores(da_rec, da_ref):
 
     print("=== CS! ===")
     print(cs.collections)
-
+    print("==============")
+    print(cs.collections[0])
+    print("==============")
+    print(cs.collections[0].get_paths()[0])
+    
     x05, y05 = cs.collections[0].get_paths()[0].vertices.T
     plt.close()
 
