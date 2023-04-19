@@ -34,7 +34,7 @@ cs = ConfigStore.instance()
 
 domains = {
     "eNATL": dict(lon=[-100, 42], lat=[7, 69]),
-    "NATL": dict(lon=[-77, 5], lat=[27, 64]),
+    "NATL": dict(lon=[-77, 5], lat=[27., 64.]),
     "cNATL": dict(lon=[-51, -9], lat=[32, 54]),
     "osmosis": dict(lon=[-22.5, -10.5], lat=[44, 56]),
     "gf": dict(lon=[-66, -54], lat=[32, 44]),
