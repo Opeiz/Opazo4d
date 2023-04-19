@@ -62,8 +62,8 @@ def multi_domain_osse_diag(
     lit_mod.norm_stats = norm_dm.norm_stats()
 
     trainer.test(lit_mod, datamodule=dm)
-    tdat_mod = lit_mod.test_data
-    tdat_mod = tdat_mod.assign(rec_ssh=tdat_mod.rec_ssh.where(np.isfinite(tdat_mod.ssh), np.nan)).drop("obs")
+    # tdat_mod = lit_mod.test_data
+    # tdat_mod = tdat_mod.assign(rec_ssh=tdat_mod.rec_ssh.where(np.isfinite(tdat_mod.ssh), np.nan)).drop("obs")
 
     if save_dir is not None:
         save_dir = Path(save_dir)
