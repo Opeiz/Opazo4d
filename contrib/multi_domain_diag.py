@@ -69,7 +69,7 @@ def multi_domain_osse_diag(
         save_dir = Path(save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
     
-    tdat = tdat_mod.to_netcdf(save_dir / "multi_domain_tdat.nc")
+    # tdat = tdat_mod.to_netcdf(save_dir / "multi_domain_tdat.nc")
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
     print(metrics_df.to_markdown())
