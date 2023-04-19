@@ -47,7 +47,7 @@ def multi_domain_osse_diag(
     ckpt_path,
     test_domains,
     test_periods,
-    tdat, 
+    # tdat, 
     rec_weight=None,
     save_dir=None,
     src_dm=None,
