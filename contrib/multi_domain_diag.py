@@ -71,7 +71,7 @@ def multi_domain_osse_diag(
     tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
-    # print(metrics_df.to_markdown())
+    print(metrics_df.to_markdown())
     metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
 
@@ -88,6 +88,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
                 1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
             )
             
+            print("Domain")
+            print(d)
             psd, lx, lt = src.utils.psd_based_scores(
                 da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
                 da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
@@ -101,8 +103,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,):
                             "variable": "rec_ssh",
                             "lt": lt,
                             "lx": lx,
-                            "lats": "[" + str((test_domains[d].test["lat"]).start) + "," + str((test_domains[d].test["lat"]).stop) + "]",
-                            "lons": "[" + str((test_domains[d].test["lon"]).start) + "," + str((test_domains[d].test["lon"]).stop) + "]",
+                            "lats": "\[" + str((test_domains[d].test["lat"]).start) + "," + str((test_domains[d].test["lat"]).stop) + "\]",
+                            "lons": "\[" + str((test_domains[d].test["lon"]).start) + "," + str((test_domains[d].test["lon"]).stop) + "\]",
                         },
                     ]
                 )
@@ -120,6 +122,7 @@ def load_oi_4nadirs():
     ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
     
     exit = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+    print(exit)
     return exit
 
 def load_oi_swot():
@@ -128,4 +131,5 @@ def load_oi_swot():
     ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
     
     exit = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+    print(exit)
     return exit

@@ -186,6 +186,7 @@ def psd_based_scores(da_rec, da_ref):
     psd_based_score = 1.0 - mean_psd_err / mean_psd_signal
     print("PSD BASED SCORE:")
     print(psd_based_score)
+    
     level = [0.5]
     
     cs = plt.contour(
