@@ -71,6 +71,6 @@ defaults:
   # - /domain@test_domains.canaries: canaries
   # - /domain@test_domains.osmosis: osmosis
   # - /domain@test_domains.eNATL: eNATL
-  - /domain@test_domains.NATL: NATL
+  # - /domain@test_domains.NATL: NATL
   - _self_
 
