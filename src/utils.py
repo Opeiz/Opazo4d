@@ -193,7 +193,7 @@ def psd_based_scores(da_rec, da_ref):
         1.0 / psd_based_score.freq_lon.values,
         1.0 / psd_based_score.freq_time.values,
         psd_based_score,
-        level,
+        # level,
     )
     x05, y05 = cs.collections[0].get_paths()[0].vertices.T
     plt.close()
