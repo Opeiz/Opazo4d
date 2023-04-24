@@ -235,7 +235,7 @@ class BilinAEPriorCost(nn.Module):
         x = self.conv_hidden(F.relu(x))
 
         x = self.conv_out(
-            torch.cat([self.bilin_1(x), self.bilin_21(x) * self.bilin_21(x)], dim=1)
+            torch.cat([self.bilin_1(x), self.bilin_21(x) * self.bilin_22(x)], dim=1)
         )
         x = self.up(x)
         return x
