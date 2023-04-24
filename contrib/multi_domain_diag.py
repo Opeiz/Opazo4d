@@ -70,6 +70,14 @@ def multi_domain_osse_diag(
         save_dir.mkdir(parents=True, exist_ok=True)
     
     # tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
+    
+    ## TEST
+    # oi = xr.open_dataset('../sla-data-registry/NATL60/NATL/oi/ssh_NATL60_4nadir.nc')
+    # ssh = xr.open_dataset('../sla-data-registry/NATL60/NATL/ref_new/NATL60-CJM165_NATL_ssh_y2013.1y.nc')
+    # ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
+    
+    # tdat = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
     print("=== Metrics ===")
