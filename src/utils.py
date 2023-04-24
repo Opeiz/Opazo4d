@@ -161,7 +161,7 @@ def rmse_based_scores(da_rec, da_ref):
 def psd_based_scores(da_rec, da_ref):
     err = da_rec - da_ref
     print("=== ERR ===")
-    print(err)
+    # print(err)
     err["time"] = (err.time - err.time[0]) / np.timedelta64(1, "D")
 
     signal = da_ref
@@ -185,7 +185,7 @@ def psd_based_scores(da_rec, da_ref):
     
     psd_based_score = 1.0 - mean_psd_err / mean_psd_signal
     print("=== PSD BASED SCORE ===")
-    print(psd_based_score)
+    # print(psd_based_score)
     
     level = [0.5]
     
