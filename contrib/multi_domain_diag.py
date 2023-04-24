@@ -134,5 +134,6 @@ def load_oi_swot():
     ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
     
     exit = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+    print("=== OI SWOT ===")
     print(exit)
     return exit
