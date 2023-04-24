@@ -58,10 +58,11 @@ entrypoints:
     save_dir: ${hydra:runtime.output_dir}
     # tdat: contrib.multi_domain_diag.load_oi_4nadirs
     # tdat: {_target_: contrib.multi_domain_diag.load_oi_swot}
-  - _target_: contrib.multi_domain_diag.multi_domain_osse_metrics
-    tdat: {_target_: contrib.multi_domain_diag.load_oi_4nadirs}
-    test_domains: ${test_domains}
-    test_periods: ${test_periods}
+    
+  # - _target_: contrib.multi_domain_diag.multi_domain_osse_metrics
+  #   tdat: {_target_: contrib.multi_domain_diag.load_oi_4nadirs}
+  #   test_domains: ${test_domains}
+  #   test_periods: ${test_periods}
 
 defaults:
   - /domain: qnatl
