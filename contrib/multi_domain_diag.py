@@ -47,7 +47,6 @@ def multi_domain_osse_diag(
     ckpt_path,
     test_domains,
     test_periods,
-    tdat,
     rec_weight=None,
     save_dir=None,
     src_dm=None,
@@ -78,11 +77,11 @@ def multi_domain_osse_diag(
     
     # tdat = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
 
-    metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
+    # metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
-    print("=== Metrics ===")
-    print(metrics_df.to_markdown())
-    metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
+    # print("=== Metrics ===")
+    # print(metrics_df.to_markdown())
+    # metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
 
 def multi_domain_osse_metrics(tdat, test_domains, test_periods):
@@ -130,6 +129,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
             )
             metrics.append(mdf)
     metrics_df = pd.concat(metrics).sort_values(by='mu')
+    print("=== Metrics ===")
+    print(metrics_df.to_markdown())
     return metrics_df
 
 
