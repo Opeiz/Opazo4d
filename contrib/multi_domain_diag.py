@@ -99,10 +99,10 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                 1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
             )
             
-            psd, lx, lt = src.utils.psd_based_scores(
-                da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
-                da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
-            )
+            # psd, lx, lt = src.utils.psd_based_scores(
+            #     da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
+            #     da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
+            # )
             mdf = (
                 pd.DataFrame(
                     [
@@ -110,8 +110,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                             "domain": d,
                             #"period": p,
                             "variable": "rec_ssh",
-                            "lt": lt,
-                            "lx": lx,
+                            "lt": "lt",
+                            "lx": "lx",
                             "lats": "\[" + str((test_domains[d].test["lat"]).start) + "," + str((test_domains[d].test["lat"]).stop) + "\]",
                             "lons": "\[" + str((test_domains[d].test["lon"]).start) + "," + str((test_domains[d].test["lon"]).stop) + "\]",
                         },
@@ -133,7 +133,6 @@ def load_oi_4nadirs():
     exit = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
     print("=== 4Nadirs ===")
     print(exit)
-    exit.to_netcdf("4nadirsOPAZO.nc")
     return exit
 
 def load_oi_swot():
