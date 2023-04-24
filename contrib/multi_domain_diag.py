@@ -46,8 +46,7 @@ def multi_domain_osse_diag(
     dm,
     ckpt_path,
     test_domains,
-    test_periods,
-    # tdat, 
+    test_periods, 
     rec_weight=None,
     save_dir=None,
     src_dm=None,
@@ -62,16 +61,17 @@ def multi_domain_osse_diag(
     lit_mod.norm_stats = norm_dm.norm_stats()
 
     trainer.test(lit_mod, datamodule=dm)
-    # tdat_mod = lit_mod.test_data
-    # tdat_mod = tdat_mod.assign(rec_ssh=tdat_mod.rec_ssh.where(np.isfinite(tdat_mod.ssh), np.nan)).drop("obs")
+    tdat_mod = lit_mod.test_data
+    tdat_mod = tdat_mod.assign(rec_ssh=tdat_mod.rec_ssh.where(np.isfinite(tdat_mod.ssh), np.nan)).drop("obs")
 
     if save_dir is not None:
         save_dir = Path(save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
     
-    # tdat = tdat_mod.to_netcdf(save_dir / "multi_domain_tdat.nc")
+    tdat = tdat_mod.to_netcdf(save_dir / "multi_domain_tdat.nc")
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
+    print("=== metrics ===")
     print(metrics_df.to_markdown())
     metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
@@ -123,6 +123,7 @@ def load_oi_4nadirs():
     ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
     
     exit = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+    print("=== 4Nadirs ===")
     print(exit)
     return exit
 
