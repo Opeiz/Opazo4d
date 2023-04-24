@@ -93,7 +93,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
             print("== da_rec ==")
             print(da_rec)
             print("== da_ref ==")
-            print(da_ref[0:5])
+            print(da_ref[0,1,2,3,4])
 
             leaderboard_rmse = (
                 1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
