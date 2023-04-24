@@ -81,8 +81,13 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     metrics = []
     for d in test_domains:
         for p in test_periods:
+            print("== tdom_spat ==")
             tdom_spat = test_domains[d].test
+            print(tdom_spat)
+            
+            print("== test domain ==")
             test_domain = dict(time=slice(*p), **tdom_spat)
+            print(test_domain)
 
             da_rec, da_ref = tdat.sel(test_domain).drop("ssh") ,tdat.sel(test_domain).ssh
             
@@ -90,8 +95,6 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                 1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
             )
             
-            print("Domain")
-            print(d)
             psd, lx, lt = src.utils.psd_based_scores(
                 da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
                 da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
