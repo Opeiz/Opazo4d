@@ -61,21 +61,14 @@ def multi_domain_osse_diag(
     lit_mod.norm_stats = norm_dm.norm_stats()
 
     trainer.test(lit_mod, datamodule=dm)
-    # tdat = lit_mod.test_data
-    # tdat = tdat.assign(rec_ssh=tdat.rec_ssh.where(np.isfinite(tdat.ssh), np.nan)).drop("obs")
+    tdat = lit_mod.test_data
+    tdat = tdat.assign(rec_ssh=tdat.rec_ssh.where(np.isfinite(tdat.ssh), np.nan)).drop("obs")
 
     if save_dir is not None:
         save_dir = Path(save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
     
-    # tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
-    
-    ## TEST
-    # oi = xr.open_dataset('../sla-data-registry/NATL60/NATL/oi/ssh_NATL60_4nadir.nc')
-    # ssh = xr.open_dataset('../sla-data-registry/NATL60/NATL/ref_new/NATL60-CJM165_NATL_ssh_y2013.1y.nc')
-    # ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
-    
-    # tdat = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
+    tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
 
     # metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
