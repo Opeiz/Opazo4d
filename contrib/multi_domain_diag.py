@@ -46,7 +46,8 @@ def multi_domain_osse_diag(
     dm,
     ckpt_path,
     test_domains,
-    test_periods, 
+    test_periods,
+    tdat,
     rec_weight=None,
     save_dir=None,
     src_dm=None,
@@ -61,14 +62,14 @@ def multi_domain_osse_diag(
     lit_mod.norm_stats = norm_dm.norm_stats()
 
     trainer.test(lit_mod, datamodule=dm)
-    tdat = lit_mod.test_data
-    tdat = tdat.assign(rec_ssh=tdat.rec_ssh.where(np.isfinite(tdat.ssh), np.nan)).drop("obs")
+    # tdat = lit_mod.test_data
+    # tdat = tdat.assign(rec_ssh=tdat.rec_ssh.where(np.isfinite(tdat.ssh), np.nan)).drop("obs")
 
     if save_dir is not None:
         save_dir = Path(save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
     
-    tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
+    # tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
     print("=== Metrics ===")
