@@ -70,11 +70,11 @@ def multi_domain_osse_diag(
     
     tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
 
-    # metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
+    metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
-    # print("=== Metrics ===")
-    # print(metrics_df.to_markdown())
-    # metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
+    print("=== Metrics ===")
+    print(metrics_df.to_markdown())
+    metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
 
 def multi_domain_osse_metrics(tdat, test_domains, test_periods):
