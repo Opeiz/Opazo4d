@@ -75,7 +75,7 @@ def multi_domain_osse_diag(
     metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
 
-def multi_domain_osse_metrics(tdat, test_domains, test_periods):
+def multi_domain_osse_metrics(tdat, test_domains, test_periods,save_dir):
     metrics = []
     for d in test_domains:
         for p in test_periods:
@@ -106,7 +106,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                         {
                             "domain": d,
                             #"period": p,
-                            "variable": "rec\_ssh",
+                            "variable": "rec_ssh",
                             "lt": lt,
                             "lx": lx,
                             "LAT": "[" + str((test_domains[d].test["lat"]).start) + " | " + str((test_domains[d].test["lat"]).stop) + "]",
@@ -121,7 +121,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     metrics_df = pd.concat(metrics).sort_values(by='mu')
     print("\n=== Metrics ===")
     print(metrics_df.to_markdown())
-    metrics_df.to_csv("OPAZO.csv")
+    metrics_df.to_csv(save_dir / "OPAZO.csv")
     return metrics_df
 
 
