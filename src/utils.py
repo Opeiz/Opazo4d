@@ -339,7 +339,7 @@ def load_cfg(xp_dir):
     return cfg, OmegaConf.select(hydra_cfg, "runtime.choices.xp")
 
 
-def load_enatl():
+def load_enatl(*args, **kwargs):
     ssh = xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr/').ssh
     nadirs = xr.open_zarr('../sla-data-registry/enatl_preproc/SLA_SSH_5nadirs.zarr/').ssh
 
