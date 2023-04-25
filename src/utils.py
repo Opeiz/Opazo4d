@@ -362,4 +362,4 @@ def load_enatl(*args, **kwargs):
     ds = ds.transpose('time', 'lat', 'lon').to_array().load()
     print("== eNATL ds ==")
     print(ds)
-    ret
+    return ds
