@@ -1,5 +1,8 @@
 # 4DVarNet
 
+## **Important: This is a personal version with several changes, including output tables for latex and error handlings**
+
+
 ## Prerequisite
 - git
 - conda
