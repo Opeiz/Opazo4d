@@ -79,11 +79,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     metrics = []
     for d in test_domains:
         for p in test_periods:
-            print("== tdom_spat ==")
             tdom_spat = test_domains[d].test
-            print(tdom_spat)
-            
-            print("== test domain ==")
+            print("\n== test domain ==")
             test_domain = dict(time=slice(*p), **tdom_spat)
             print(test_domain)
 
@@ -97,10 +94,10 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                 1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
             )
             
-            # psd, lx, lt = src.utils.psd_based_scores(
-            #     da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
-            #     da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
-            # )
+            psd, lx, lt = src.utils.psd_based_scores(
+                da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
+                da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
+            )
             mdf = (
                 pd.DataFrame(
                     [
@@ -108,10 +105,10 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                             "domain": d,
                             #"period": p,
                             "variable": "rec_ssh",
-                            "lt": "lt",
-                            "lx": "lx",
-                            "lats": "\[" + str((test_domains[d].test["lat"]).start) + "," + str((test_domains[d].test["lat"]).stop) + "\]",
-                            "lons": "\[" + str((test_domains[d].test["lon"]).start) + "," + str((test_domains[d].test["lon"]).stop) + "\]",
+                            "lt": lt,
+                            "lx": lx,
+                            "LAT": "\[" + str((test_domains[d].test["lat"]).start) + "," + str((test_domains[d].test["lat"]).stop) + "\]",
+                            "LON": "\[" + str((test_domains[d].test["lon"]).start) + "," + str((test_domains[d].test["lon"]).stop) + "\]",
                         },
                     ]
                 )
@@ -120,7 +117,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
             )
             metrics.append(mdf)
     metrics_df = pd.concat(metrics).sort_values(by='mu')
-    print("=== Metrics ===")
+    print("\n=== Metrics ===")
     print(metrics_df.to_markdown())
     return metrics_df
 
@@ -131,7 +128,7 @@ def load_oi_4nadirs():
     ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
     
     exit = ssh.assign(rec_ssh=oi.ssh_mod.interp(time=ssh.time, method ='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest'))
-    print("=== 4Nadirs ===")
+    print("\n=== 4Nadirs ===")
     print(exit)
     return exit
 
