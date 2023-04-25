@@ -5,6 +5,8 @@ domain: ???
 
 xp_overrides: 
   datamodule:
+    input_da:
+      _target_: src.utils.load_enatl
     xrds_kw: 
       strides: {lat: 200, lon: 200}
       domain_limits: ${domain.train}

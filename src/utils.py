@@ -158,53 +158,6 @@ def rmse_based_scores(da_rec, da_ref):
     )
 
 
-# def psd_based_scores(da_rec, da_ref):
-#     err = da_rec - da_ref
-#     err["time"] = (err.time - err.time[0]) / np.timedelta64(1, "D")
-
-#     signal = da_ref
-#     signal["time"] = (signal.time - signal.time[0]) / np.timedelta64(1, "D")
-    
-#     psd_err = xrft.power_spectrum(
-#         err, dim=["time", "lon"], detrend="constant", window="hann"
-#     ).compute()
-    
-#     psd_signal = xrft.power_spectrum(
-#         signal, dim=["time", "lon"], detrend="constant", window="hann"
-#     ).compute()
-    
-#     mean_psd_signal = psd_signal.mean(dim="lat").where(
-#         (psd_signal.freq_lon > 0.0) & (psd_signal.freq_time > 0), drop=True
-#     )
-    
-#     mean_psd_err = psd_err.mean(dim="lat").where(
-#         (psd_err.freq_lon > 0.0) & (psd_err.freq_time > 0), drop=True
-#     )
-    
-#     psd_based_score = 1.0 - mean_psd_err / mean_psd_signal
-    
-#     level = [0.5]
-    
-#     cs = plt.contour(
-#         1.0 / psd_based_score.freq_lon.values,
-#         1.0 / psd_based_score.freq_time.values,
-#         psd_based_score,
-#         level,
-#     )
-    
-#     x05, y05 = cs.collections[0].get_paths()[0].vertices.T
-#     plt.close()
-
-#     shortest_spatial_wavelength_resolved = np.min(x05)
-#     shortest_temporal_wavelength_resolved = np.min(y05)
-#     psd_da = 1.0 - mean_psd_err / mean_psd_signal
-#     psd_da.name = "psd_score"
-#     return (
-#         psd_da.to_dataset(),
-#         np.round(shortest_spatial_wavelength_resolved, 3),
-#         np.round(shortest_temporal_wavelength_resolved, 3),
-#     )
-
 def psd_based_scores(da_rec, da_ref):
     err = da_rec - da_ref
     print("=== ERR ===")
@@ -386,3 +339,18 @@ def load_cfg(xp_dir):
     return cfg, OmegaConf.select(hydra_cfg, "runtime.choices.xp")
 
 
+def load_enatl():
+    ssh = xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr/').ssh
+    nadirs = xr.open_zarr('../sla-data-registry/enatl_preproc/SLA_SSH_5nadirs.zarr/').ssh
+    ssh = ssh.interp(
+        lon=np.arange(ssh.lon.min(), ssh.lon.max(), 1/20),
+        lat=np.arange(ssh.lat.min(), ssh.lat.max(), 1/20)
+    )
+    nadirs = nadirs.interp(time=ssh.time, method='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest')
+    ds =  xr.Dataset(dict(input=nadirs, tgt=(ssh.dims, ssh.values)), nadirs.coords)
+
+    ds = ds.assign(input=ds.tgt.transpose(*ds.input.dims).where(np.isfinite(ds.input), np.nan))
+    ds = ds.transpose('time', 'lat', 'lon').to_array().load()
+    print("== eNATL ds ==")
+    print(ds)
+    return ds
