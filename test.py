@@ -22,7 +22,7 @@ def main():
                     parts = line.split()
                     module_name = parts[1]
                     try:
-                        module_path = importlib.import_module(module_name).__file__
+                        module_path = importlib.import_module(module_name).__name__
                         if os.path.isfile(module_path):
                             explore_dependencies(module_path)
                     except ModuleNotFoundError:
