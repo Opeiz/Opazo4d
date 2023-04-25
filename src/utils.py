@@ -342,6 +342,12 @@ def load_cfg(xp_dir):
 def load_enatl():
     ssh = xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr/').ssh
     nadirs = xr.open_zarr('../sla-data-registry/enatl_preproc/SLA_SSH_5nadirs.zarr/').ssh
+
+    print("== SSH eNATL ==")
+    print(ssh)
+    print("== NADIRS eNATL ==")
+    print(nadirs)
+
     ssh = ssh.interp(
         lon=np.arange(ssh.lon.min(), ssh.lon.max(), 1/20),
         lat=np.arange(ssh.lat.min(), ssh.lat.max(), 1/20)
