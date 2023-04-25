@@ -70,12 +70,12 @@ def multi_domain_osse_diag(
     
     tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
 
-    metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods,save_dir)
+    metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
     metrics_df.to_csv(save_dir / "multi_domain_metrics.csv")
 
 
-def multi_domain_osse_metrics(tdat, test_domains, test_periods,save_dir):
+def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     metrics = []
     for d in test_domains:
         for p in test_periods:
@@ -121,7 +121,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods,save_dir):
     metrics_df = pd.concat(metrics).sort_values(by='mu')
     print("\n=== Metrics ===")
     print(metrics_df.to_markdown())
-    metrics_df.to_csv(save_dir / "OPAZO.csv")
+    
     return metrics_df
 
 
