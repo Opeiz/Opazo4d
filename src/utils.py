@@ -113,6 +113,9 @@ def load_altimetry_data(path, obs_from_tgt=False):
     if obs_from_tgt:
         ds = ds.assign(input=ds.tgt.where(np.isfinite(ds.input), np.nan))
     
+
+    print(ds[[*src.data.TrainingItem._fields]].transpose("time", "lat", "lon").to_array())
+    
     return (
         ds[[*src.data.TrainingItem._fields]]
         .transpose("time", "lat", "lon")
@@ -359,4 +362,4 @@ def load_enatl(*args, **kwargs):
     ds = ds.transpose('time', 'lat', 'lon').to_array().load()
     print("== eNATL ds ==")
     print(ds)
-    return ds
+    ret
