@@ -245,6 +245,8 @@ def psd_based_scores(da_rec, da_ref):
     try:
         x05, y05 = cs.collections[0].get_paths()[0].vertices.T
     except:
+        x05 = 0
+        y05 = 0
         print("== NO FUNCO ==")
         pass
     
