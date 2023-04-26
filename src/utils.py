@@ -353,10 +353,13 @@ def load_enatl(*args, **kwargs):
     nadirs = nadirs.interp(time=ssh.time, method='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest')
     ds =  xr.Dataset(dict(input=nadirs, tgt=(ssh.dims, ssh.values)), nadirs.coords)
 
-    print("== SSH eNATL ==")
-    print(ssh)
-    print("== NADIRS eNATL ==")
-    print(nadirs)
+    # print("== SSH eNATL ==")
+    # print(ssh)
+    # print("== NADIRS eNATL ==")
+    # print(nadirs)
+
+    print("==== DS ====")
+    print(ds)
 
     ds = ds.assign(input=ds.tgt.transpose(*ds.input.dims).where(np.isfinite(ds.input), np.nan))
     ds = ds.transpose('time', 'lat', 'lon').to_array().load()
