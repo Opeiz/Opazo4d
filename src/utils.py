@@ -161,7 +161,7 @@ def rmse_based_scores(da_rec, da_ref):
 def psd_based_scores(da_rec, da_ref):
     err = da_rec - da_ref
     print("=== ERR ===")
-    # print(err)
+    print(err)
     err["time"] = (err.time - err.time[0]) / np.timedelta64(1, "D")
 
     signal = da_ref
@@ -350,15 +350,15 @@ def load_enatl(*args, **kwargs):
     nadirs = nadirs.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest')
     ds =  xr.Dataset(dict(input=nadirs, tgt=(ssh.dims, ssh.values)), nadirs.coords)
 
-    print("== SSH eNATL ==")
+    print("\n== SSH eNATL ==")
     print(ssh)
-    print("== NADIRS eNATL ==")
+    print("\n== NADIRS eNATL ==")
     print(nadirs)
-    print("==== DS ====")
+    print("\n==== DS ====")
     print(ds)
 
     ds = ds.assign(input=ds.tgt.transpose(*ds.input.dims).where(np.isfinite(ds.input), np.nan))
     ds = ds.transpose('time', 'lat', 'lon').to_array().load()
-    print("== eNATL ds ==")
+    print("\n== eNATL ds ==")
     print(ds)
     return ds
