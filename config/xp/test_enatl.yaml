@@ -7,6 +7,13 @@ xp_overrides:
   datamodule:
     input_da:
       _target_: src.utils.load_enatl
+    domains:
+      train:
+        time: {_target_: builtins.slice, _args_: ['2013-02-24', '2013-09-30']}
+      val: 
+        time: {_target_: builtins.slice, _args_: ['2012-12-15', '2013-02-24']}
+      test: 
+        time: {_target_: builtins.slice,  _args_: ['2012-10-01', '2012-12-20']}
     xrds_kw: 
       strides: {lat: 200, lon: 200}
       domain_limits: ${domain.train}
