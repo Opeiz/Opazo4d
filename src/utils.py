@@ -112,10 +112,7 @@ def load_altimetry_data(path, obs_from_tgt=False):
 
     if obs_from_tgt:
         ds = ds.assign(input=ds.tgt.where(np.isfinite(ds.input), np.nan))
-    
-
-    print(ds[[*src.data.TrainingItem._fields]].transpose("time", "lat", "lon").to_array())
-    
+        
     return (
         ds[[*src.data.TrainingItem._fields]]
         .transpose("time", "lat", "lon")
@@ -350,14 +347,13 @@ def load_enatl(*args, **kwargs):
         lon=np.arange(ssh.lon.min(), ssh.lon.max(), 1/20),
         lat=np.arange(ssh.lat.min(), ssh.lat.max(), 1/20)
     )
-    nadirs = nadirs.interp(time=ssh.time, method='nearest').interp(lat=ssh.lat, lon=ssh.lon, method='nearest')
+    nadirs = nadirs.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest')
     ds =  xr.Dataset(dict(input=nadirs, tgt=(ssh.dims, ssh.values)), nadirs.coords)
 
-    # print("== SSH eNATL ==")
-    # print(ssh)
-    # print("== NADIRS eNATL ==")
-    # print(nadirs)
-
+    print("== SSH eNATL ==")
+    print(ssh)
+    print("== NADIRS eNATL ==")
+    print(nadirs)
     print("==== DS ====")
     print(ds)
 

@@ -9,11 +9,11 @@ xp_overrides:
       _target_: src.utils.load_enatl
     domains:
       train:
-        time: {_target_: builtins.slice, _args_: ['2013-02-24', '2013-09-30']}
+        time: {_target_: builtins.slice , _args_: ['2010-02-24', '2010-07-3']}
       val: 
-        time: {_target_: builtins.slice, _args_: ['2012-12-15', '2013-02-24']}
+        time: {_target_: builtins.slice, _args_: ['2009-12-15', '2010-02-24']}
       test: 
-        time: {_target_: builtins.slice,  _args_: ['2012-10-01', '2012-12-20']}
+        time: {_target_: builtins.slice,  _args_: ['2009-07-01', '2009-12-20']}
     xrds_kw: 
       strides: {lat: 200, lon: 200}
       domain_limits: ${domain.train}
