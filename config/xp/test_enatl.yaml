@@ -15,9 +15,9 @@ xp_overrides:
       test: 
         time: {_target_: builtins.slice,  _args_: ['2009-07-01', '2009-12-20']}
     xrds_kw: 
-      strides: {lat: 100, lon: 100}
+      strides: {lat: 200, lon: 200}
       domain_limits: ${domain.train}
-    dl_kw: {batch_size: 2, num_workers: 32}
+    # dl_kw: {batch_size: 2, num_workers: 32}
 
 trainer: 
   _target_: pytorch_lightning.Trainer
