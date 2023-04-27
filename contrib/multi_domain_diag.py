@@ -79,18 +79,10 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     metrics = []
     for d in test_domains:
         for p in test_periods:
-            print("\n== Domain ==")
-            print(d)
             tdom_spat = test_domains[d].test
-            print("== test domain ==")
             test_domain = dict(time=slice(*p), **tdom_spat)
-            print(test_domain)
 
             da_rec, da_ref = tdat.sel(test_domain).drop("ssh") ,tdat.sel(test_domain).ssh
-            print("== da_rec ==")
-            print(da_rec)
-            print("== da_ref ==")
-            print(da_ref)
 
             leaderboard_rmse = (
                 1.0 - (((da_rec - da_ref) ** 2).mean()) ** 0.5 / (((da_ref) ** 2).mean()) ** 0.5
@@ -123,8 +115,6 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     
     print("\n=== Metrics ===")
     print(metrics_df.to_markdown())
-    metrics_df.to_csv("OPAZO.csv")
-
     return metrics_df
 
 
