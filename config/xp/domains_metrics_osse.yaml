@@ -4,6 +4,8 @@ xpd: ???
 domain: ???
 
 xp_overrides:
+  trainer:
+    devices: 2
   datamodule:
     xrds_kw:
       strides: {lat: 200, lon: 200}
