@@ -233,7 +233,7 @@ class BilinAEPriorCost(nn.Module):
         print("============ TEST ============")
         x = self.down(x)
         x = self.conv_in(x)
-        x = self.conv_hidden(F.relu(x))
+        x = self.conv_hidden(F.elu(x))
 
         x = self.conv_out(
             torch.cat([self.bilin_1(x), self.bilin_21(x) * self.bilin_22(x)], dim=1)
