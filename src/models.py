@@ -230,7 +230,6 @@ class BilinAEPriorCost(nn.Module):
         )
 
     def forward_ae(self, x):
-        print("============ TEST ============")
         x = self.down(x)
         x = self.conv_in(x)
         x = self.conv_hidden(F.elu(x))
