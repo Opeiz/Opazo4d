@@ -115,6 +115,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     
     print("\n=== Metrics ===")
     print(metrics_df.to_markdown())
+    print("\n")
     return metrics_df
 
 
