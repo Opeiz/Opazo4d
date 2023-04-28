@@ -232,7 +232,7 @@ class BilinAEPriorCost(nn.Module):
     def forward_ae(self, x):
         x = self.down(x)
         x = self.conv_in(x)
-        x = self.conv_hidden(F.hardtanh(x))
+        x = self.conv_hidden(F.hardswish(x))
 
         x = self.conv_out(
             torch.cat([self.bilin_1(x), self.bilin_21(x) * self.bilin_22(x)], dim=1)
