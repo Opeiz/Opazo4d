@@ -199,7 +199,7 @@ class BaseObsCost(nn.Module):
 
 
 class BilinAEPriorCost(nn.Module):
-    def __init__(self, dim_in, dim_hidden,activation, kernel_size=3, downsamp=None):
+    def __init__(self, dim_in, dim_hidden, activation=F.relu, kernel_size=3, downsamp=None):
         super().__init__()
         self.activation = activation
         self.conv_in = nn.Conv2d(
@@ -233,15 +233,7 @@ class BilinAEPriorCost(nn.Module):
     def forward_ae(self, x):
         x = self.down(x)
         x = self.conv_in(x)
-
-        if self.activation == "hardshrink":
-            act = F.hardshrink(x)
-        elif self.activation == "tanh":
-            act = F.tanh(x)
-        else:
-            act = F.relu(x)
-
-        x = self.conv_hidden(act)
+        x = self.conv_hidden(self.activation(x))
 
         x = self.conv_out(
             torch.cat([self.bilin_1(x), self.bilin_21(x) * self.bilin_22(x)], dim=1)

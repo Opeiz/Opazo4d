@@ -1,0 +1,11 @@
+# @package _global_
+
+act: hardshrink
+
+model:
+  solver: 
+    priorcost:
+      activation: torch.nn.functionall.${act}
+
+defaults:
+  - _self_
