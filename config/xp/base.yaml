@@ -69,7 +69,7 @@ model:
       downsamp: 2
       activation: 
         _target_: torch.nn.functional.relu
-        _parcial_: true
+        _partial_: true
     obs_cost: 
       _target_: src.models.BaseObsCost
     grad_mod: 
