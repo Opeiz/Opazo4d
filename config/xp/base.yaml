@@ -42,7 +42,7 @@ datamodule:
     patch_dims: { time: 15, lat: 240, lon: 240}
     strides: { time: 1, lat: 200, lon: 200}
     domain_limits: ${domain.train}
-  dl_kw: {batch_size: 4, num_workers: 1}
+  dl_kw: {batch_size: 4, num_workers: 64}
   aug_factor: 2
   aug_only: True
 
