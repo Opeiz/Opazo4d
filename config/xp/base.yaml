@@ -67,7 +67,9 @@ model:
       dim_in: ${datamodule.xrds_kw.patch_dims.time}
       dim_hidden: 32
       downsamp: 2
-      activation: hardshrink
+      activation: 
+        _target_: torch.nn.functionall.hardshrink
+        _parcial_: true
     obs_cost: 
       _target_: src.models.BaseObsCost
     grad_mod: 
