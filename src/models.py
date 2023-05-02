@@ -238,7 +238,7 @@ class BilinAEPriorCost(nn.Module):
             act = F.hardshrink(x)
         elif self.activation == "tanh":
             act = F.tanh(x)
-        else
+        else:
             act = F.relu(x)
 
         x = self.conv_hidden(act)
