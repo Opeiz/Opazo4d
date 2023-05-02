@@ -17,7 +17,6 @@ xp_overrides:
     xrds_kw: 
       strides: {lat: 200, lon: 200}
       domain_limits: ${domain.train}
-    # dl_kw: {batch_size: 2, num_workers: 32}
 
 trainer: 
   _target_: pytorch_lightning.Trainer

@@ -199,8 +199,9 @@ class BaseObsCost(nn.Module):
 
 
 class BilinAEPriorCost(nn.Module):
-    def __init__(self, dim_in, dim_hidden, kernel_size=3, downsamp=None):
+    def __init__(self, dim_in, dim_hidden,activation, kernel_size=3, downsamp=None):
         super().__init__()
+        self.activation = activation
         self.conv_in = nn.Conv2d(
             dim_in, dim_hidden, kernel_size=kernel_size, padding=kernel_size // 2
         )
@@ -232,7 +233,7 @@ class BilinAEPriorCost(nn.Module):
     def forward_ae(self, x):
         x = self.down(x)
         x = self.conv_in(x)
-        x = self.conv_hidden(F.relu(x))
+        x = self.conv_hidden(F.activation(x))
 
         x = self.conv_out(
             torch.cat([self.bilin_1(x), self.bilin_21(x) * self.bilin_22(x)], dim=1)
