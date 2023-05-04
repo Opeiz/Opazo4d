@@ -5,7 +5,8 @@ act: leaky_relu
 model:
   solver: 
     prior_cost:
-      activation: torch.nn.functional.${act}
+      activation: 
+        _target_: torch.nn.functional.${act}
 
 defaults:
   - _self_
