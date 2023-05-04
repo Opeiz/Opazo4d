@@ -199,7 +199,7 @@ class BaseObsCost(nn.Module):
 
 
 class BilinAEPriorCost(nn.Module):
-    def __init__(self, dim_in, dim_hidden, activation=F.relu, kernel_size=3, downsamp=None):
+    def __init__(self, dim_in, dim_hidden, activation=F.leaky_relu, kernel_size=3, downsamp=None):
         super().__init__()
         self.activation = activation
         self.conv_in = nn.Conv2d(
