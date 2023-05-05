@@ -144,7 +144,7 @@ def load_oi_swot_4nadirs():
     return exit
 
 def load_miost():
-    ssh = xr.open_dataset('../sla-data-registry/enatl_prepoc/miost_nadirs.nc')
-    ssh['time'] = pd.to_datetime('2012-10-01') + pd.to_timedelta(ssh.time, 's') 
+    ssh = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
+    ssh['time'] = pd.to_datetime('2009-07-01') + pd.to_timedelta(ssh.time, 's') 
     
-    return ssh.ssh
+    return ssh
