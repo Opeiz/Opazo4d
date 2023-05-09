@@ -72,9 +72,8 @@ def multi_domain_osse_diag(
 
     miost = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
     ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr').load()
-    # ssh['time'] = pd.to_datetime('2009-07-01')
     
-    tdat = ssh.assign(rec_ssh=miost.ssh.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
+    tdat = ssh.assign(rec_ssh=miost.ssh.interp(time=ssh.time, lat=ssh.latitude, lon=ssh.longitud, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
     print('===== Data =====')
     print(tdat)
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
