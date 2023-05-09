@@ -91,8 +91,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
             )
             
             psd, lx, lt = src.utils.psd_based_scores(
-                da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
-                da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da)),
+                da_rec.rec_ssh.pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da, dask='allowed')),
+                da_ref.copy().pipe(lambda da: xr.apply_ufunc(np.nan_to_num, da, dask='allowed')),
             )
             mdf = (
                 pd.DataFrame(
