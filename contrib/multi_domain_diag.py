@@ -144,7 +144,9 @@ def load_oi_swot_4nadirs():
     return exit
 
 def load_miost():
-    ssh = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
+    miost = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
+    ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr')
     ssh['time'] = pd.to_datetime('2009-07-01')
     
+    exit = ssh.assign(rec_ssh=miost.ssh_mod.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
     return ssh
