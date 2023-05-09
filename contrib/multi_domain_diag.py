@@ -71,7 +71,7 @@ def multi_domain_osse_diag(
     # tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
 
     miost = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
-    ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr')
+    ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr').load()
     # ssh['time'] = pd.to_datetime('2009-07-01')
     
     tdat = ssh.assign(rec_ssh=miost.ssh.interp(time= ssh.time, latitude=ssh.lat, longitude=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
