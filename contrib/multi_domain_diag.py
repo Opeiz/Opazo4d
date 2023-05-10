@@ -152,4 +152,4 @@ def load_miost():
     miost = miost.rename({"latitude":'lat',"longitude":'lon'})
     
     tdat = ssh.assign(rec_ssh=miost.ssh.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
-    retur
+    return tdat
