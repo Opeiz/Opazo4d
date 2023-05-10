@@ -61,20 +61,13 @@ def multi_domain_osse_diag(
     lit_mod.norm_stats = norm_dm.norm_stats()
 
     trainer.test(lit_mod, datamodule=dm)
-    
-    # tdat = lit_mod.test_data
-    # tdat = tdat.assign(rec_ssh=tdat.rec_ssh.where(np.isfinite(tdat.ssh), np.nan)).drop("obs")
+
+    tdat = lit_mod.test_data
+    tdat = tdat.assign(rec_ssh=tdat.rec_ssh.where(np.isfinite(tdat.ssh), np.nan)).drop("obs")
 
     if save_dir is not None:
         save_dir = Path(save_dir)
         save_dir.mkdir(parents=True, exist_ok=True)
-
-    # =====
-    miost = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
-    ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr').load()
-    miost = miost.rename({"latitude":'lat',"longitude":'lon'})
-    tdat = ssh.assign(rec_ssh=miost.ssh.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
-    # ======
 
     tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
     
