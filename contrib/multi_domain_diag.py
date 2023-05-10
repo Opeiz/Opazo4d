@@ -104,8 +104,8 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                             "variable": "rec_ssh",
                             "lt": lt,
                             "lx": lx,
-                            # "LON": "[" + str((test_domains[d].test["lon"]).start) + " | " + str((test_domains[d].test["lon"]).stop) + "]",
-                            # "LAT": "[" + str((test_domains[d].test["lat"]).start) + " | " + str((test_domains[d].test["lat"]).stop) + "]",
+                            "LON": "[" + str((test_domains[d].test["lon"]).start) + " | " + str((test_domains[d].test["lon"]).stop) + "]",
+                            "LAT": "[" + str((test_domains[d].test["lat"]).start) + " | " + str((test_domains[d].test["lat"]).stop) + "]",
                         },
                     ]
                 )
