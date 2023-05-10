@@ -35,7 +35,7 @@ ckpt:
 
 test_domains: ???
 
-test_periods: [["2009-07-01", "2009-12-31"]]
+test_periods: [["2009-07-01", "2010-07-31"]]
 
 rec_weight:
   _target_: contrib.multi_domain_diag.get_smooth_spat_rec_weight
