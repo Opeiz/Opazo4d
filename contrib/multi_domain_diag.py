@@ -70,12 +70,15 @@ def multi_domain_osse_diag(
     
     # tdat.to_netcdf(save_dir / "multi_domain_tdat.nc")
 
+    # ====
     miost = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
     ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr').load()
-    
-    tdat = ssh.assign(rec_ssh=miost.ssh.interp(time=ssh.time, latitude=ssh.lat, longitude=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
+    miost = miost.rename({"latitude":'lat',"longitude":'lon'})
+    tdat = ssh.assign(rec_ssh=miost.ssh.interp(time=ssh.time, lat=ssh.lat, lon=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
     print('===== Data =====')
     print(tdat)
+    # =====
+    
     metrics_df = multi_domain_osse_metrics(tdat, test_domains, test_periods)
 
     print("==== Metrics ====")
@@ -152,7 +155,6 @@ def load_oi_swot_4nadirs():
 def load_miost():
     miost = xr.open_dataset('../sla-data-registry/enatl_preproc/miost_nadirs.nc')
     ssh =  xr.open_zarr('../sla-data-registry/enatl_preproc/truth_SLA_SSH_NATL60.zarr')
-    ssh['time'] = pd.to_datetime('2009-07-01')
     
     test = ssh.assign(rec_ssh=miost.ssh.interp(time= ssh.time, latitude=ssh.lat, longitude=ssh.lon, method='nearest').where(lambda ds: np.abs(ds) < 10, np.nan))
     print('===== Data =====')
