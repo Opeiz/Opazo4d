@@ -83,7 +83,7 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
     for d in test_domains:
         for p in test_periods:
             tdom_spat = test_domains[d].test
-            test_domain = dict(time=slice(*p), **tdom_spat)
+            test_domain = dict(time=slice(*test_periods[p]), **tdom_spat)
 
             da_rec, da_ref = tdat.sel(test_domain).drop("ssh") ,tdat.sel(test_domain).ssh
 
