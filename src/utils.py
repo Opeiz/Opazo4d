@@ -160,8 +160,6 @@ def rmse_based_scores(da_rec, da_ref):
 
 def psd_based_scores(da_rec, da_ref):
     err = da_rec - da_ref
-    print("===== ERROR =====")
-    print(err)
     err["time"] = (err.time - err.time[0]) / np.timedelta64(1, "D")
 
     signal = da_ref
