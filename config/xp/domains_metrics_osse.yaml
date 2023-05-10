@@ -8,7 +8,7 @@ xp_overrides:
     xrds_kw:
       strides: {lat: 200, lon: 200}
       domain_limits: ${domain.train}
-    dl_kw: {batch_size: 4, num_workers: 64}
+    dl_kw: {batch_size: 2, num_workers: 64}
 
 trainer: 
   _target_: pytorch_lightning.Trainer
@@ -35,7 +35,7 @@ ckpt:
 
 test_domains: ???
 
-test_periods: [["2009-07-01", "2009-12-02"]]
+test_periods: [["2009-07-01", "2009-12-31"]]
 
 rec_weight:
   _target_: contrib.multi_domain_diag.get_smooth_spat_rec_weight
