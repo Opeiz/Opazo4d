@@ -6,9 +6,9 @@ domain: ???
 xp_overrides:
   datamodule:
     xrds_kw:
-      strides: {lat: 200, lon: 200}
+      strides: {lat: 100, lon: 100}
       domain_limits: ${domain.train}
-    dl_kw: {batch_size: 8, num_workers: 64}
+    dl_kw: {batch_size: 4, num_workers: 64}
 
 trainer: 
   _target_: pytorch_lightning.Trainer
