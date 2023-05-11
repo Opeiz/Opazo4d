@@ -112,12 +112,12 @@ def multi_domain_osse_metrics(tdat, test_domains, test_periods):
                 .set_index("variable")
                 .join(round(leaderboard_rmse.to_array().to_dataframe(name="mu"),5))
             )
-            metrics.append(mdf)   
+            metrics.append(mdf)
     
     metrics_df = pd.concat(metrics).sort_values(by='mu')
     print("==== Metrics ====")
     print(metrics_df.to_markdown())
-    metrics_df.to_csv("multi_domain_metrics.csv")
+    # metrics_df.to_csv("multi_domain_metrics.csv")
 
     return metrics_df
 

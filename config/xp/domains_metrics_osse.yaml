@@ -49,21 +49,21 @@ rec_weight:
     xpd : ${xpd}
 
 entrypoints:
-  # - _target_: pytorch_lightning.seed_everything
-  #   seed: 333
-  # - _target_: contrib.multi_domain_diag.multi_domain_osse_diag
-  #   trainer: ${trainer}
-  #   lit_mod: ${lit_mod}
-  #   dm: ${dm}
-  #   ckpt_path: ${ckpt}
-  #   rec_weight: ${rec_weight}
-  #   test_domains: ${test_domains}
-  #   test_periods: ${test_periods}
-  #   save_dir: ${hydra:runtime.output_dir}
-  - _target_: contrib.multi_domain_diag.multi_domain_osse_metrics
-    tdat: {_target_: contrib.multi_domain_diag.load_miost}
+  - _target_: pytorch_lightning.seed_everything
+    seed: 333
+  - _target_: contrib.multi_domain_diag.multi_domain_osse_diag
+    trainer: ${trainer}
+    lit_mod: ${lit_mod}
+    dm: ${dm}
+    ckpt_path: ${ckpt}
+    rec_weight: ${rec_weight}
     test_domains: ${test_domains}
     test_periods: ${test_periods}
+    save_dir: ${hydra:runtime.output_dir}
+  # - _target_: contrib.multi_domain_diag.multi_domain_osse_metrics
+  #   tdat: {_target_: contrib.multi_domain_diag.load_miost}
+  #   test_domains: ${test_domains}
+  #   test_periods: ${test_periods}
 
 defaults:
   - /domain: qnatl
