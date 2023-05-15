@@ -5,8 +5,8 @@ domain: ???
 
 xp_overrides: 
   datamodule:
-    # input_da:
-    #   _target_: src.utils.load_enatl
+    input_da:
+      _target_: src.utils.load_enatl
     domains:
       train:
         time: {_target_: builtins.slice , _args_: ['2010-02-24', '2010-07-31']}
