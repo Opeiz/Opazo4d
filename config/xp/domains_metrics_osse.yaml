@@ -29,9 +29,9 @@ dm:
   xpd : ${xpd}
   overrides: ${xp_overrides}
 
-# ckpt:
-#   _target_: src.utils.best_ckpt
-#   xp_dir: ${xpd}/base
+ckpt:
+  _target_: src.utils.best_ckpt
+  xp_dir: ${xpd}/base
 
 test_domains: ???
 
