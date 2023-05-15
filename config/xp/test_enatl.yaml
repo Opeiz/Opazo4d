@@ -5,17 +5,17 @@ domain: ???
 
 xp_overrides: 
   datamodule:
-    input_da:
-      _target_: src.utils.load_enatl
+    # input_da:
+    #   _target_: src.utils.load_enatl
     domains:
       train:
-        time: {_target_: builtins.slice , _args_: ['2010-02-24', '2010-07-3']}
+        time: {_target_: builtins.slice , _args_: ['2010-02-24', '2010-07-31']}
       val: 
         time: {_target_: builtins.slice, _args_: ['2009-12-15', '2010-02-24']}
       test: 
         time: {_target_: builtins.slice,  _args_: ['2009-07-01', '2009-12-20']}
     xrds_kw: 
-      strides: {lat: 200, lon: 200}
+      strides: {lat: 100, lon: 100}
       domain_limits: ${domain.train}
 
 trainer: 
@@ -43,8 +43,11 @@ ckpt:
 
 test_domains: ???
 
-# test_periods: [["2012-10-22", "2012-12-02"]]
-test_periods: [['2009-07-01', '2010-07-31']]
+test_periods: [ ["2009-07-01", "2010-07-31"],
+                ["2009-07-01", "2009-08-31"],
+                ["2009-10-01", "2009-11-30"],
+                ["2010-01-01", "2010-02-28"],
+                ["2010-04-01", "2010-05-31"]]
 
 rec_weight:
   _target_: contrib.multi_domain_diag.get_smooth_spat_rec_weight
@@ -73,9 +76,9 @@ entrypoints:
 defaults:
   - /domain: qnatl
   - /domain@test_domains.qnatl: qnatl
-  - /domain@test_domains.cNATL: cNATL
-  - /domain@test_domains.4gf: 4gf
-  - /domain@test_domains.2gf: 2gf
+  # - /domain@test_domains.cNATL: cNATL
+  # - /domain@test_domains.4gf: 4gf
+  # - /domain@test_domains.2gf: 2gf
   - /domain@test_domains.gf: gf
   - /domain@test_domains.canaries: canaries
   - /domain@test_domains.osmosis: osmosis
